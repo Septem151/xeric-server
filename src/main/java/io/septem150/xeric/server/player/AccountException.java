@@ -1,16 +1,16 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.player;
 
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum DiaryTier {
+public enum AccountException {
 
-    EASY("Easy"),
-    MEDIUM("Medium"),
-    HARD("Hard"),
-    ELITE("Elite");
+    SLAYER("Slayer"),
+    HERBLORE("Herblore"),
+    BOXTRAPS("Boxtraps"),
+    OTHER("Other");
 
     private final String name;
 

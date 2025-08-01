@@ -1,4 +1,4 @@
-package io.septem150.xeric_server;
+package io.septem150.xeric.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

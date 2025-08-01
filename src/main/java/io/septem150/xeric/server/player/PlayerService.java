@@ -1,8 +1,8 @@
-package io.septem150.xeric_server.player;
+package io.septem150.xeric.server.player;
 
-import io.septem150.xeric_server.task.Task;
-import io.septem150.xeric_server.task.TaskRepository;
-import io.septem150.xeric_server.util.NotFoundException;
+import io.septem150.xeric.server.task.Task;
+import io.septem150.xeric.server.task.TaskRepository;
+import io.septem150.xeric.server.util.NotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -59,12 +59,12 @@ public class PlayerService {
         playerDTO.setAccountType(player.getAccountType());
         playerDTO.setAccountExceptions(player.getAccountExceptions());
         playerDTO.setTasks(player.getTasks().stream()
-                .map(task -> task.getId())
+                .map(Task::getId)
                 .toList());
         return playerDTO;
     }
 
-    private Player mapToEntity(final PlayerDTO playerDTO, final Player player) {
+    private void mapToEntity(final PlayerDTO playerDTO, final Player player) {
         player.setUsername(playerDTO.getUsername());
         player.setAccountType(playerDTO.getAccountType());
         player.setAccountExceptions(playerDTO.getAccountExceptions());
@@ -74,7 +74,6 @@ public class PlayerService {
             throw new NotFoundException("one of tasks not found");
         }
         player.setTasks(new HashSet<>(tasks));
-        return player;
     }
 
     public boolean usernameExists(final String username) {

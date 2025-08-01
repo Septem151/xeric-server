@@ -1,7 +1,7 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
-import io.septem150.xeric_server.player.PlayerRepository;
-import io.septem150.xeric_server.util.NotFoundException;
+import io.septem150.xeric.server.player.PlayerRepository;
+import io.septem150.xeric.server.util.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class TaskService {
         return taskDTO;
     }
 
-    private Task mapToEntity(final TaskDTO taskDTO, final Task task) {
+    private void mapToEntity(final TaskDTO taskDTO, final Task task) {
         task.setName(taskDTO.getName());
         task.setTier(taskDTO.getTier());
         task.setType(taskDTO.getType());
@@ -100,7 +100,6 @@ public class TaskService {
         task.setLevel(taskDTO.getLevel());
         task.setGoal(taskDTO.getGoal());
         task.setQuest(taskDTO.getQuest());
-        return task;
     }
 
     public boolean nameExists(final String name) {

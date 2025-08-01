@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.config;
+package io.septem150.xeric.server.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;

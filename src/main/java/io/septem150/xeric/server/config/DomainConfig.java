@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.config;
+package io.septem150.xeric.server.config;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
-@EntityScan("io.septem150.xeric_server")
-@EnableJpaRepositories("io.septem150.xeric_server")
+@EntityScan("io.septem150.xeric.server")
+@EnableJpaRepositories("io.septem150.xeric.server")
 @EnableTransactionManagement
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
 public class DomainConfig {

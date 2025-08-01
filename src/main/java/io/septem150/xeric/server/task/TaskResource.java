@@ -1,9 +1,9 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
+import io.septem150.xeric.server.util.RequireAdmin;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TaskResource {
-
     private final TaskService taskService;
 
     public TaskResource(final TaskService taskService) {
@@ -40,6 +39,7 @@ public class TaskResource {
 
     @PostMapping
     @ApiResponse(responseCode = "201")
+    @RequireAdmin
     public ResponseEntity<Long> createTask(@RequestBody @Valid final TaskDTO taskDTO) {
         final Long createdId = taskService.create(taskDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
@@ -47,12 +47,14 @@ public class TaskResource {
 
     @PostMapping("/bulk")
     @ApiResponse(responseCode = "201")
+    @RequireAdmin
     public ResponseEntity<List<Long>> bulkCreate(@RequestBody @Valid final List<TaskDTO> taskDTOs) {
         final List<Long> createdIds = taskService.bulkCreate(taskDTOs);
         return new ResponseEntity<>(createdIds, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @RequireAdmin
     public ResponseEntity<Long> updateTask(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final TaskDTO taskDTO) {
         taskService.update(id, taskDTO);
@@ -61,9 +63,9 @@ public class TaskResource {
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
+    @RequireAdmin
     public ResponseEntity<Void> deleteTask(@PathVariable(name = "id") final Long id) {
         taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

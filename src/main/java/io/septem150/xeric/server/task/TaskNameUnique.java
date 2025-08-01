@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;

@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/xeric-server}
-    username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:password}
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
@@ -28,4 +28,6 @@ error:
       PlayerUsernameUnique: PLAYER_USERNAME_UNIQUE
       TaskNameUnique: TASK_NAME_UNIQUE
 springdoc:
-  pathsToMatch: /, /api/**
+  pathsToMatch: /api/**
+  swagger-ui:
+    use-root-path: true

@@ -1,6 +1,6 @@
-package io.septem150.xeric_server.player;
+package io.septem150.xeric.server.player;
 
-import io.septem150.xeric_server.task.Task;
+import io.septem150.xeric.server.task.Task;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;

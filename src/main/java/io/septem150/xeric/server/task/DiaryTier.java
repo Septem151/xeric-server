@@ -1,18 +1,16 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum TaskType {
+public enum DiaryTier {
 
-    CA("ca"),
-    COLLECT("collect"),
-    DIARY("diary"),
-    KC("kc"),
-    LEVEL("level"),
-    QUEST("quest");
+    EASY("Easy"),
+    MEDIUM("Medium"),
+    HARD("Hard"),
+    ELITE("Elite");
 
     private final String name;
 

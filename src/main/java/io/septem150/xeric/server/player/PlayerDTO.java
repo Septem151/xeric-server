@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.player;
+package io.septem150.xeric.server.player;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

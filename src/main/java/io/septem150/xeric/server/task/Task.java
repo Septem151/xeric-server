@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,5 +1,6 @@
-package io.septem150.xeric_server.player;
+package io.septem150.xeric.server.player;
 
+import io.septem150.xeric.server.util.RequireAdmin;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -52,6 +53,7 @@ public class PlayerResource {
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
+    @RequireAdmin
     public ResponseEntity<Void> deletePlayer(@PathVariable(name = "id") final Long id) {
         playerService.delete(id);
         return ResponseEntity.noContent().build();

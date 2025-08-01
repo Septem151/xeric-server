@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.task;
+package io.septem150.xeric.server.task;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

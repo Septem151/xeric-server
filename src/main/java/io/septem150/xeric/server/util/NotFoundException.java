@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.util;
+package io.septem150.xeric.server.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

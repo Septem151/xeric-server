@@ -1,4 +1,4 @@
-package io.septem150.xeric_server.player;
+package io.septem150.xeric.server.player;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
