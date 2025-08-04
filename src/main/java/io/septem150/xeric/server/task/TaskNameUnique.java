@@ -4,6 +4,7 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 
+import io.septem150.xeric.server.util.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
@@ -51,12 +52,16 @@ public @interface TaskNameUnique {
                 // no value present
                 return true;
             }
-            @SuppressWarnings("unchecked") final Map<String, String> pathVariables =
-                    ((Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
-            final String currentId = pathVariables.get("id");
-            if (currentId != null && value.equalsIgnoreCase(taskService.get(Long.parseLong(currentId)).getName())) {
-                // value hasn't changed
-                return true;
+            try {
+                @SuppressWarnings("unchecked") final Map<String, String> pathVariables =
+                        ((Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
+                final String currentId = pathVariables.get("id");
+                if (currentId != null && value.equalsIgnoreCase(taskService.get(Long.parseLong(currentId)).getName())) {
+                    // value hasn't changed
+                    return true;
+                }
+            } catch (NotFoundException ignored) {
+                // ignored
             }
             return !taskService.nameExists(value);
         }

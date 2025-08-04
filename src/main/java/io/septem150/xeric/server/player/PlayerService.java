@@ -33,7 +33,7 @@ public class PlayerService {
     public PlayerDTO get(final Long id) {
         return playerRepository.findById(id)
                 .map(player -> mapToDTO(player, new PlayerDTO()))
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("player not found"));
     }
 
     public Long create(final PlayerDTO playerDTO) {
@@ -44,12 +44,15 @@ public class PlayerService {
 
     public void update(final Long id, final PlayerDTO playerDTO) {
         final Player player = playerRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("player not found"));
         mapToEntity(playerDTO, player);
         playerRepository.save(player);
     }
 
     public void delete(final Long id) {
+        if (!playerRepository.existsById(id)) {
+            throw new NotFoundException("player not found");
+        }
         playerRepository.deleteById(id);
     }
 

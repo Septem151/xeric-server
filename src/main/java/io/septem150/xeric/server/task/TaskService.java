@@ -33,7 +33,7 @@ public class TaskService {
     public TaskDTO get(final Long id) {
         return taskRepository.findById(id)
                 .map(task -> mapToDTO(task, new TaskDTO()))
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("task not found"));
     }
 
     public Long create(final TaskDTO taskDTO) {
@@ -54,14 +54,14 @@ public class TaskService {
 
     public void update(final Long id, final TaskDTO taskDTO) {
         final Task task = taskRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("task not found"));
         mapToEntity(taskDTO, task);
         taskRepository.save(task);
     }
 
     public void delete(final Long id) {
         final Task task = taskRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("task not found"));
         // remove many-to-many relations at owning side
         playerRepository.findAllByTasks(task)
                 .forEach(player -> player.getTasks().remove(task));
