@@ -44,7 +44,7 @@ public class PlayerResource {
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<Long> updatePlayer(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final PlayerDTO playerDTO) {
         playerService.update(id, playerDTO);

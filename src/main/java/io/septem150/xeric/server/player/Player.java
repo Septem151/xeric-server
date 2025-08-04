@@ -73,4 +73,20 @@ public class Player {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    public int getPoints() {
+        boolean slayer = isSlayerException();
+        int points = 0;
+        for (Task task : tasks) {
+            if (slayer) {
+                points += task.getSlayerPoints();
+            } else {
+                points += task.getTier();
+            }
+        }
+        return points;
+    }
+
+    public boolean isSlayerException() {
+        return accountExceptions.contains(AccountException.SLAYER);
+    }
 }

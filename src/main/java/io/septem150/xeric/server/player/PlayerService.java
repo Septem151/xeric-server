@@ -61,6 +61,8 @@ public class PlayerService {
         playerDTO.setTasks(player.getTasks().stream()
                 .map(Task::getId)
                 .toList());
+        playerDTO.setPoints(player.getPoints());
+        playerDTO.setSlayerException(player.isSlayerException());
         return playerDTO;
     }
 
@@ -68,9 +70,8 @@ public class PlayerService {
         player.setUsername(playerDTO.getUsername());
         player.setAccountType(playerDTO.getAccountType());
         player.setAccountExceptions(playerDTO.getAccountExceptions());
-        final List<Task> tasks = taskRepository.findAllById(
-                playerDTO.getTasks() == null ? List.of() : playerDTO.getTasks());
-        if (tasks.size() != (playerDTO.getTasks() == null ? 0 : playerDTO.getTasks().size())) {
+        final List<Task> tasks = taskRepository.findAllById(playerDTO.getTasks());
+        if (tasks.size() != playerDTO.getTasks().size()) {
             throw new NotFoundException("one of tasks not found");
         }
         player.setTasks(new HashSet<>(tasks));

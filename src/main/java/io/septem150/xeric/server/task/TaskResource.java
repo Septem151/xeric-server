@@ -53,7 +53,7 @@ public class TaskResource {
         return new ResponseEntity<>(createdIds, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     @RequireAdmin
     public ResponseEntity<Long> updateTask(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final TaskDTO taskDTO) {
