@@ -1,16 +1,18 @@
 package io.septem150.xeric.server.task;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+@Schema(enumAsRef = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum DiaryTier {
+public enum Diary {
 
-    EASY("Easy"),
-    MEDIUM("Medium"),
-    HARD("Hard"),
-    ELITE("Elite");
+    KOUREND_EASY("Easy"),
+    KOUREND_MEDIUM("Medium"),
+    KOUREND_HARD("Hard"),
+    KOUREND_ELITE("Elite");
 
     private final String name;
 

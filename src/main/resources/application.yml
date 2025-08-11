@@ -17,17 +17,20 @@ spring:
             non_contextual_creation: true
         id:
           new_generator_mappings: true
-error:
-  handling:
-    http-status-in-json-response: true
-    exception-logging: NO_LOGGING
-    full-stacktrace-http-statuses: 5xx
-    log-levels:
-      5xx: ERROR
-    codes:
-      PlayerUsernameUnique: PLAYER_USERNAME_UNIQUE
-      TaskNameUnique: TASK_NAME_UNIQUE
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL}/realms/projectxeric
+          jwk-set-uri: ${KEYCLOAK_URL}/realms/projectxeric/protocol/openid-connect/certs
 springdoc:
-  pathsToMatch: /api/**
+  show-login-endpoint: true
   swagger-ui:
+    oauth:
+      use-pkce-with-authorization-code-grant: true
+      client-id: projectxeric
+    try-it-out-enabled: true
     use-root-path: true
+server:
+  port: 8082
+  use-forward-headers: true

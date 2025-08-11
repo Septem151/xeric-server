@@ -2,7 +2,9 @@ package io.septem150.xeric.server.task;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,38 +13,36 @@ import lombok.Setter;
 @Setter
 public class TaskDTO {
 
-    private Long id;
+  private Long id;
 
-    @NotNull
-    @Size(max = 255)
-    @TaskNameUnique
-    private String name;
+  @NotNull
+  @Size(max = 255)
+  private String name;
 
-    @NotNull
-    private Integer tier;
+  @NotNull
+  private Integer tier;
 
-    @NotNull
-    private TaskType type;
+  @NotNull
+  private TaskType type;
 
-    @Size(max = 255)
-    private String icon;
+  @Size(max = 255)
+  private String icon;
 
-    private Integer slayerPoints;
+  private Integer slayerPoints;
 
-    private Integer total;
+  private Integer total;
 
-    private List<Integer> itemIds;
+  private List<Integer> itemIds;
 
-    private Integer amount;
+  private Integer amount;
 
-    private DiaryTier diary;
+  private Diary diary;
 
-    private Boss boss;
+  private Boss boss;
 
-    private Level level;
+  private Level level;
 
-    private Integer goal;
+  private Integer goal;
 
-    private Quest quest;
-
+  private Quest quest;
 }

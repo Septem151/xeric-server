@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ADMIN')")
-@SecurityRequirement(name = "basicAuth")
+@PreAuthorize("hasRole('admin')")
+@SecurityRequirement(name = "keycloak")
 public @interface RequireAdmin {
 }

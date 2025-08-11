@@ -3,85 +3,98 @@ package io.septem150.xeric.server.player;
 import io.septem150.xeric.server.task.Task;
 import io.septem150.xeric.server.task.TaskRepository;
 import io.septem150.xeric.server.util.NotFoundException;
-import java.util.HashSet;
-import java.util.List;
+import io.septem150.xeric.server.util.UniqueNameException;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
+import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Validated
+@Transactional
+@RequiredArgsConstructor(onConstructor_ = @__(@Autowired))
 public class PlayerService {
+  private final PlayerRepository playerRepository;
+  private final TaskRepository taskRepository;
 
-    private final PlayerRepository playerRepository;
-    private final TaskRepository taskRepository;
+  public @NonNull List<PlayerDTO> findAll() {
+    final List<Player> players = playerRepository.findAll(Sort.by("id"));
+    return players.stream()
+            .map(player -> mapToDTO(player, new PlayerDTO()))
+            .toList();
+  }
 
-    public PlayerService(final PlayerRepository playerRepository,
-            final TaskRepository taskRepository) {
-        this.playerRepository = playerRepository;
-        this.taskRepository = taskRepository;
+  public @NonNull PlayerDTO get(@NonNull final Long id) {
+    return playerRepository.findById(id)
+            .map(player -> mapToDTO(player, new PlayerDTO()))
+            .orElseThrow(() -> new NotFoundException("player not found"));
+  }
+
+  public @NonNull PlayerDTO get(@NonNull final String name) {
+    return playerRepository.findByUsernameIgnoreCase(name)
+            .map(player -> mapToDTO(player, new PlayerDTO()))
+            .orElseThrow(() -> new NotFoundException("player not found"));
+  }
+
+  public @NonNull Long create(@NonNull final PlayerDTO playerDTO) {
+    Player player = playerRepository.findByUsernameIgnoreCase(playerDTO.getUsername()).orElse(null);
+    if (player != null) {
+      throw new UniqueNameException("player already exists", player.getId());
     }
+    player = new Player();
+    mapToEntity(playerDTO, player);
+    return playerRepository.save(player).getId();
+  }
 
-    public List<PlayerDTO> findAll() {
-        final List<Player> players = playerRepository.findAll(Sort.by("id"));
-        return players.stream()
-                .map(player -> mapToDTO(player, new PlayerDTO()))
-                .toList();
+  public void update(@NonNull final Long id, @NonNull final PlayerDTO playerDTO) {
+    final Player player = playerRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("player not found"));
+    mapToEntity(playerDTO, player);
+    playerRepository.save(player);
+  }
+
+  public void delete(@NonNull final Long id) {
+    if (!playerRepository.existsById(id)) {
+      throw new NotFoundException("player not found");
     }
+    playerRepository.deleteById(id);
+  }
 
-    public PlayerDTO get(final Long id) {
-        return playerRepository.findById(id)
-                .map(player -> mapToDTO(player, new PlayerDTO()))
-                .orElseThrow(() -> new NotFoundException("player not found"));
+  private @NonNull PlayerDTO mapToDTO(@NonNull final Player entity, @NonNull final PlayerDTO dto) {
+    dto.setId(entity.getId());
+    dto.setUsername(entity.getUsername());
+    dto.setAccountType(entity.getAccountType());
+    dto.setAccountExceptions(entity.getAccountExceptions());
+    dto.setTasks(entity.getTaskCompletions().stream().map(PlayerTask::getTaskId).toList());
+    dto.setPoints(entity.getPoints());
+    dto.setSlayerException(entity.isSlayerException());
+    return dto;
+  }
+
+  private void mapToEntity(@NonNull final PlayerDTO dto, @NonNull final Player entity) {
+    entity.setUsername(dto.getUsername());
+    entity.setAccountType(dto.getAccountType());
+    entity.setAccountExceptions(dto.getAccountExceptions());
+    final List<Task> dtoTasks = taskRepository.findAllById(dto.getTasks());
+    if (dtoTasks.size() != dto.getTasks().size()) {
+      throw new NotFoundException("one or more tasks not found");
     }
-
-    public Long create(final PlayerDTO playerDTO) {
-        final Player player = new Player();
-        mapToEntity(playerDTO, player);
-        return playerRepository.save(player).getId();
+    if (entity.getTaskCompletions() != null) {
+      final List<Task> entityTasks = entity.getTaskCompletions().stream().map(PlayerTask::getTask).toList();
+      dtoTasks.removeAll(entityTasks);
     }
-
-    public void update(final Long id, final PlayerDTO playerDTO) {
-        final Player player = playerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("player not found"));
-        mapToEntity(playerDTO, player);
-        playerRepository.save(player);
+    for (Task task : dtoTasks) {
+      PlayerTask playerTask = new PlayerTask();
+      playerTask.setTask(task);
+      playerTask.setPlayer(entity);
+      playerTask.setDateCompleted(OffsetDateTime.now());
+      entity.getTaskCompletions().add(playerTask);
     }
-
-    public void delete(final Long id) {
-        if (!playerRepository.existsById(id)) {
-            throw new NotFoundException("player not found");
-        }
-        playerRepository.deleteById(id);
-    }
-
-    private PlayerDTO mapToDTO(final Player player, final PlayerDTO playerDTO) {
-        playerDTO.setId(player.getId());
-        playerDTO.setUsername(player.getUsername());
-        playerDTO.setAccountType(player.getAccountType());
-        playerDTO.setAccountExceptions(player.getAccountExceptions());
-        playerDTO.setTasks(player.getTasks().stream()
-                .map(Task::getId)
-                .toList());
-        playerDTO.setPoints(player.getPoints());
-        playerDTO.setSlayerException(player.isSlayerException());
-        return playerDTO;
-    }
-
-    private void mapToEntity(final PlayerDTO playerDTO, final Player player) {
-        player.setUsername(playerDTO.getUsername());
-        player.setAccountType(playerDTO.getAccountType());
-        player.setAccountExceptions(playerDTO.getAccountExceptions());
-        final List<Task> tasks = taskRepository.findAllById(playerDTO.getTasks());
-        if (tasks.size() != playerDTO.getTasks().size()) {
-            throw new NotFoundException("one of tasks not found");
-        }
-        player.setTasks(new HashSet<>(tasks));
-    }
-
-    public boolean usernameExists(final String username) {
-        return playerRepository.existsByUsernameIgnoreCase(username);
-    }
-
+  }
 }
