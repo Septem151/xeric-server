@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
@@ -21,14 +23,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL}/realms/projectxeric
-          jwk-set-uri: ${KEYCLOAK_URL}/realms/projectxeric/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}
+          jwk-set-uri: ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
 springdoc:
   show-login-endpoint: true
   swagger-ui:
     oauth:
       use-pkce-with-authorization-code-grant: true
-      client-id: projectxeric
+      client-id: ${KEYCLOAK_CLIENT_ID}
     try-it-out-enabled: true
     use-root-path: true
 server:
