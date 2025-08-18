@@ -36,3 +36,6 @@ springdoc:
 server:
   port: 8082
   use-forward-headers: true
+  forward-headers-strategy: NATIVE
+  tomcat:
+    redirect-context-root: false
