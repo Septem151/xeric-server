@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package io.septem150.xeric.server.task;
 
+import io.septem150.xeric.server.XericServerApplication;
 import io.septem150.xeric.server.util.RequireAdmin;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -38,7 +39,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(
+    value = "/" + XericServerApplication.API_VERSION + "/tasks",
+    produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor(onConstructor_ = @__(@Autowired))
 public class TaskController {
   private final TaskService taskService;

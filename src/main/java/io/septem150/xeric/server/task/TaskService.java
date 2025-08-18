@@ -108,7 +108,6 @@ public class TaskService {
     dto.setLevel(entity.getLevel());
     dto.setName(entity.getName());
     dto.setQuest(entity.getQuest());
-    dto.setSlayerPoints(entity.getSlayerPoints());
     dto.setTier(entity.getTier());
     dto.setTotal(entity.getTotal());
     dto.setType(entity.getType());
@@ -125,7 +124,6 @@ public class TaskService {
     entity.setLevel(dto.getLevel());
     entity.setName(dto.getName());
     entity.setQuest(dto.getQuest());
-    entity.setSlayerPoints(dto.getSlayerPoints());
     entity.setTier(dto.getTier());
     entity.setTotal(dto.getTotal());
     entity.setType(dto.getType());

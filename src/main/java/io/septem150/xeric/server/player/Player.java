@@ -72,15 +72,10 @@ public class Player {
   private OffsetDateTime lastUpdated;
 
   public int getPoints() {
-    boolean slayer = isSlayerException();
     int points = 0;
     for (PlayerTask taskCompletion : taskCompletions) {
       Task task = taskCompletion.getTask();
-      if (slayer && task.getSlayerPoints() != null) {
-        points += task.getSlayerPoints();
-      } else {
-        points += task.getTier();
-      }
+      points += task.getTier();
     }
     return points;
   }

@@ -43,11 +43,9 @@ public class PlayerDTO {
 
   @NotNull private AccountType accountType;
 
-  @NotNull @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  private List<AccountException> accountExceptions;
+  @NotNull private List<AccountException> accountExceptions;
 
-  @NotNull @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  private List<Long> tasks;
+  @NotNull private List<Long> tasks;
 
   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   private int points;

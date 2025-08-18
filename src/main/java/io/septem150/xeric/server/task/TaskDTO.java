@@ -46,8 +46,6 @@ public class TaskDTO {
 
   @Size(max = 255) private String icon;
 
-  private Integer slayerPoints;
-
   private Integer total;
 
   private List<Integer> itemIds;

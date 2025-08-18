@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package io.septem150.xeric.server.config;
 
+import io.septem150.xeric.server.XericServerApplication;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -60,7 +61,7 @@ public class SwaggerConfig {
         .info(
             new Info()
                 .title("Project Xeric")
-                .version("1")
+                .version(XericServerApplication.API_VERSION)
                 .description("Resource server for the Project Xeric RuneLite plugin")
                 .contact(
                     new Contact()

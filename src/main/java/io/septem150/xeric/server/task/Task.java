@@ -61,8 +61,6 @@ public class Task {
 
   @Column private String icon;
 
-  @Column private Integer slayerPoints;
-
   @Column private Integer total;
 
   @Column(columnDefinition = "jsonb")
