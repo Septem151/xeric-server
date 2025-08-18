@@ -1,44 +1,33 @@
 # Xeric Server
 
-This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
+## Table of Contents
 
-## Development
+- Project Home
+  - [Endpoints](#endpoints)
+  - [Changelog](#changelog)
+  - [Support the Project](#support-the-project)
 
-Update your local database connection in `application.yml` or create your own `application-local.yml` file to override
-settings for development.
+**Zeah Clan Rank & Task Tracking Plugin Backend**
 
-During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options".
+Xeric Server is a backend API designed for the "**Zeah Ironmen**" clan's "Project Xeric" plugin on RuneLite's Plugin Hub.
+This backend stores task data as well as allows for uploading of player data to the leaderboards.
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
+## Endpoints
 
-After starting the application it is accessible under `localhost:8080`.
+- https://projectxeric.com (WIP)
+  - Main frontend that displays the leaderboard, tasks, and details about individual players and tasks.
+- https://api.projectxeric.com
+  - Backend server that houses tasks and player data.
+  - Swagger UI for documentation and testing of endpoints.
+- https://auth.projectxeric.com
+  - Keycloak authorization portal for administrative user management.
 
-## Build
+## Changelog
 
-The application can be built using the following command:
+### 1.0.0
 
-```
-mvnw clean package
-```
+- Initial release of the "/v1" API.
 
-Start your application with the following command - here with the profile `production`:
+## Support the Project
 
-```
-java -Dspring.profiles.active=production -jar ./target/xeric-server-0.0.1-SNAPSHOT.jar
-```
-
-If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
-environment variable when running the container.
-
-```
-mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=io.septem150/xeric-server
-```
-
-## Further readings
-
-* [Maven docs](https://maven.apache.org/guides/index.html)
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/reference/jpa.html)
-
+If you enjoy using this plugin and would like to support us financially, please consider supporting [Septem on Ko-Fi](https://Ko-fi.com/Septem) (all proceeds go to Septem directly). Anything is appreciated, as running a server is not free! The project costs ~$12 annually and $5 monthly to keep the servers running.
